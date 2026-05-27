@@ -14,25 +14,21 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Java 21 අනිවාර්යයෙන්ම ඕනේ
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
 
-    # නැති .env ෆයිල් ටික හදනවා
     - name: Create Missing Env File
       run: |
         touch .env.example
         touch .env
 
-    # ප්‍රොජෙක්ට් එක ඉල්ලන debug.keystore එක හදනවා
     - name: Generate Debug Keystore
       run: |
         keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
-    # මෙන්න මේ පාර 9.3.1 මයි කෙලින්ම සෙට් කරන්නේ!
     - name: Setup Gradle Wrapper
       run: |
         gradle wrapper --gradle-version 9.3.1
@@ -40,11 +36,12 @@ jobs:
     - name: Grant Execute Permission for Gradlew
       run: chmod +x gradlew
 
+    # මෙතනට අපි split options දාලා හැම ෆෝන් එකකටම හරියන එකක් හදනවා
     - name: Build with Gradle
-      run: ./gradlew assembleDebug --no-daemon
+      run: ./gradlew assembleDebug -Pandroid.startParameter.projectProperties="android.injected.build.abi.arm64-v8a=false,android.injected.build.abi.armeabi-v7a=false" --no-daemon
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/
