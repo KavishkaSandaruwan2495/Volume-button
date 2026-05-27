@@ -32,9 +32,9 @@ jobs:
     - name: Grant Execute Permission for Gradlew
       run: chmod +x gradlew
 
-    # මෙතනින් අපි කරන්නේ release build එකක් රන් කරන එකයි
+      # රිලීස් එක ඩිබග් කී එකෙන් සයින් කරන්න කියලා කියනවා
     - name: Build Release APK
-      run: ./gradlew assembleRelease --no-daemon
+      run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android --no-daemon
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
