@@ -14,21 +14,22 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set up JDK 17
+    # අලුත්ම Gradle එකට හරියන්න Java 21 දානවා
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
 
-    # නැති .env.example file එක බලෙන්ම හදල දෙනවා build එක බේරගන්න
     - name: Create Missing Env File
       run: |
         touch .env.example
         touch .env
 
+    # මෙතනින් කෙලින්ම ඉල්ලන Gradle 9.3.1 එකම දෙනවා
     - name: Setup Gradle Wrapper
       run: |
-        gradle wrapper --gradle-version 8.4
+        gradle wrapper --gradle-version 9.3.1
 
     - name: Grant Execute Permission for Gradlew
       run: chmod +x gradlew
