@@ -1,0 +1,6 @@
+{
+  "name": "Volume Button",
+  "description": "An app that displays the system volume bar instantly when its icon is clicked, without opening an app interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
