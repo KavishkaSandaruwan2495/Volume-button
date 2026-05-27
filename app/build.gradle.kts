@@ -37,16 +37,17 @@ android {
   }
 
   buildTypes {
-    release {
-      isCrunchPngs = false
-      isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("release")
+        release {
+            // මේ පේළි දෙකෙන් තමයි ඇප් එකේ සයිස් එක කුඩු වෙන්නම අඩු කරන්නේ!
+            isMinifyEnabled = true
+            isShrinkResources = true
+            
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
-    debug {
-      signingConfig = signingConfigs.getByName("debugConfig")
-    }
-  }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
