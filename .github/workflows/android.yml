@@ -25,6 +25,11 @@ jobs:
         touch .env.example
         touch .env
 
+    # මෙතනින් අපි හරියටම keystore එක app folder එක ඇතුළටම හදලා දෙනවා
+    - name: Generate Debug Keystore
+      run: |
+        keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+
     - name: Setup Gradle Wrapper
       run: |
         gradle wrapper --gradle-version 9.3.1
@@ -32,9 +37,9 @@ jobs:
     - name: Grant Execute Permission for Gradlew
       run: chmod +x gradlew
 
-      # රිලීස් එක ඩිබග් කී එකෙන් සයින් කරන්න කියලා කියනවා
+    # නිවැරදි පැත් එක දීලා රිලීස් එක ඔටෝ සයින් කරනවා
     - name: Build Release APK
-      run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android --no-daemon
+      run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android --no-daemon
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
