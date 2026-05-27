@@ -38,9 +38,9 @@ android {
 
   buildTypes {
         release {
-            // මේ පේළි දෙකෙන් තමයි ඇප් එකේ සයිස් එක කුඩු වෙන්නම අඩු කරන්නේ!
             isMinifyEnabled = true
             isShrinkResources = true
+            isCrunchPngs = false // අර PNG ලෙඩේ ආයෙත් නොඑන්න මේක තියෙන්න ඇරපන්
             
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
